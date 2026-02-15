@@ -6,7 +6,6 @@
 
 import SwiftUI
 import sharedKit
-import Combine
 
 class CharacterListViewModelWrapper: ObservableObject {
     @Published var characters: [AnimeCharacter] = []
@@ -14,27 +13,54 @@ class CharacterListViewModelWrapper: ObservableObject {
     @Published var errorMessage: String?
 
     private let viewModel = sharedKit.CharacterListViewModel()
-    private var cancellables = Set<AnyCancellable>()
 
     init() {
-        // Observe characters StateFlow
-        Task { @MainActor in
-            for await value in viewModel.characters {
-                self.characters = value
+        observeCharacters()
+        observeIsLoading()
+        observeErrorMessage()
+    }
+
+    private func observeCharacters() {
+        Task {
+            do {
+                let stream = asyncStream(for: viewModel.characters)
+                for try await value in stream {
+                    DispatchQueue.main.async { [weak self] in
+                        self?.characters = value
+                    }
+                }
+            } catch {
+                print("Error observing characters: \(error)")
             }
         }
+    }
 
-        // Observe isLoading StateFlow
-        Task { @MainActor in
-            for await value in viewModel.isLoading {
-                self.isLoading = value
+    private func observeIsLoading() {
+        Task {
+            do {
+                let stream = asyncStream(for: viewModel.isLoading)
+                for try await value in stream {
+                    DispatchQueue.main.async { [weak self] in
+                        self?.isLoading = value
+                    }
+                }
+            } catch {
+                print("Error observing isLoading: \(error)")
             }
         }
+    }
 
-        // Observe errorMessage StateFlow
-        Task { @MainActor in
-            for await value in viewModel.errorMessage {
-                self.errorMessage = value
+    private func observeErrorMessage() {
+        Task {
+            do {
+                let stream = asyncStream(for: viewModel.errorMessage)
+                for try await value in stream {
+                    DispatchQueue.main.async { [weak self] in
+                        self?.errorMessage = value
+                    }
+                }
+            } catch {
+                print("Error observing errorMessage: \(error)")
             }
         }
     }
