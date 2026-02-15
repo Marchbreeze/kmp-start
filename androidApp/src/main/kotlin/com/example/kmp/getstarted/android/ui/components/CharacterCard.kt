@@ -44,8 +44,12 @@ import coil.compose.AsyncImage
 import com.example.kmp.shared.data.model.AnimeCharacter
 
 @Composable
-fun CharacterCard(character: AnimeCharacter) {
+fun CharacterCard(
+    character: AnimeCharacter,
+    onClick: () -> Unit = {},
+) {
     Card(
+        onClick = onClick,
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(12.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
