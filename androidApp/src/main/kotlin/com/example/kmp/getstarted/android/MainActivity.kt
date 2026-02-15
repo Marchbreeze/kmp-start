@@ -44,12 +44,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -59,7 +57,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.kmp.shared.AnimeCharacter
-import com.example.kmp.shared.RickAndMortyApi
+import com.example.kmp.shared.CharacterListViewModel
 import com.example.kmp.shared.platform
 
 class MainActivity : ComponentActivity() {
@@ -75,22 +73,12 @@ class MainActivity : ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CharacterListScreen() {
-    val api = remember { RickAndMortyApi() }
-    var characters by remember { mutableStateOf<List<AnimeCharacter>>(emptyList()) }
-    var isLoading by remember { mutableStateOf(true) }
-    var errorMessage by remember { mutableStateOf<String?>(null) }
-
-    LaunchedEffect(Unit) {
-        try {
-            val response = api.getCharacters()
-            characters = response.results
-            isLoading = false
-        } catch (e: Exception) {
-            errorMessage = e.message
-            isLoading = false
-        }
-    }
+fun CharacterListScreen(
+    viewModel: CharacterListViewModel = viewModel { CharacterListViewModel() }
+) {
+    val characters by viewModel.characters.collectAsState()
+    val isLoading by viewModel.isLoading.collectAsState()
+    val errorMessage by viewModel.errorMessage.collectAsState()
 
     Scaffold(
         topBar = {

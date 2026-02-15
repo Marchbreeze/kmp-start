@@ -6,37 +6,42 @@
 
 import SwiftUI
 import sharedKit
+import Combine
 
-class CharacterListViewModel: ObservableObject {
+class CharacterListViewModelWrapper: ObservableObject {
     @Published var characters: [AnimeCharacter] = []
     @Published var isLoading = true
     @Published var errorMessage: String?
 
-    private let api = RickAndMortyApi()
+    private let viewModel = sharedKit.CharacterListViewModel()
+    private var cancellables = Set<AnyCancellable>()
 
-    func loadCharacters() {
-        isLoading = true
-        errorMessage = nil
+    init() {
+        // Observe characters StateFlow
+        Task { @MainActor in
+            for await value in viewModel.characters {
+                self.characters = value
+            }
+        }
 
-        Task {
-            do {
-                let response = try await api.getCharacters(page: 1)
-                await MainActor.run {
-                    self.characters = response.results
-                    self.isLoading = false
-                }
-            } catch {
-                await MainActor.run {
-                    self.errorMessage = error.localizedDescription
-                    self.isLoading = false
-                }
+        // Observe isLoading StateFlow
+        Task { @MainActor in
+            for await value in viewModel.isLoading {
+                self.isLoading = value
+            }
+        }
+
+        // Observe errorMessage StateFlow
+        Task { @MainActor in
+            for await value in viewModel.errorMessage {
+                self.errorMessage = value
             }
         }
     }
 }
 
 struct ContentView: View {
-    @StateObject private var viewModel = CharacterListViewModel()
+    @StateObject private var viewModel = CharacterListViewModelWrapper()
 
     var body: some View {
         NavigationStack {
@@ -70,9 +75,6 @@ struct ContentView: View {
                         .foregroundStyle(.secondary)
                 }
             }
-        }
-        .onAppear {
-            viewModel.loadCharacters()
         }
     }
 }
