@@ -8,7 +8,7 @@ import SwiftUI
 import sharedKit
 
 class CharacterListViewModel: ObservableObject {
-    @Published var characters: [Character_] = []
+    @Published var characters: [AnimeCharacter] = []
     @Published var isLoading = true
     @Published var errorMessage: String?
 
@@ -78,7 +78,7 @@ struct ContentView: View {
 }
 
 struct CharacterRow: View {
-    let character: Character_
+    let character: AnimeCharacter
 
     var body: some View {
         HStack(spacing: 12) {

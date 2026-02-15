@@ -20,7 +20,7 @@ class RickAndMortyApi {
         }
     }
 
-    suspend fun getCharacters(page: Int = 1): CharacterResponse {
+    suspend fun getCharacters(page: Int = 1): AnimeCharacterResponse {
         return client
             .get("https://rickandmortyapi.com/api/character?page=$page")
             .body()

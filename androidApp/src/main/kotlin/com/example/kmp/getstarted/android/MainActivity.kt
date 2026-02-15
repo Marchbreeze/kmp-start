@@ -58,7 +58,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.example.kmp.shared.Character
+import com.example.kmp.shared.AnimeCharacter
 import com.example.kmp.shared.RickAndMortyApi
 import com.example.kmp.shared.platform
 
@@ -77,7 +77,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun CharacterListScreen() {
     val api = remember { RickAndMortyApi() }
-    var characters by remember { mutableStateOf<List<Character>>(emptyList()) }
+    var characters by remember { mutableStateOf<List<AnimeCharacter>>(emptyList()) }
     var isLoading by remember { mutableStateOf(true) }
     var errorMessage by remember { mutableStateOf<String?>(null) }
 
@@ -152,7 +152,7 @@ fun CharacterListScreen() {
 }
 
 @Composable
-fun CharacterCard(character: Character) {
+fun CharacterCard(character: AnimeCharacter) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(12.dp),

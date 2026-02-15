@@ -4,9 +4,9 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class CharacterResponse(
+data class AnimeCharacterResponse(
     val info: Info,
-    val results: List<Character>,
+    val results: List<AnimeCharacter>,
 )
 
 @Serializable
@@ -18,7 +18,7 @@ data class Info(
 )
 
 @Serializable
-data class Character(
+data class AnimeCharacter(
     val id: Int,
     val name: String,
     val status: String,
