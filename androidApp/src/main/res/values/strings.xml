@@ -15,6 +15,5 @@
      limitations under the License.
 -->
 <resources>
-    <style name="AppTheme" parent="android:Theme.Material.NoActionBar"/>
-    <style name="Theme.KMPGetStartedCodelab" parent="android:Theme.Material.Light.NoActionBar"/>
+    <string name="app_name">KMP Get Started</string>
 </resources>
