@@ -26,6 +26,7 @@ plugins {
     alias(libs.plugins.androidKotlinMultiplatformLibrary) apply false
     alias(libs.plugins.skie) apply false
     alias(libs.plugins.kotlinxSerialization) apply false
+    alias(libs.plugins.composeMultiplatform) apply false
 }
 
 subprojects {
