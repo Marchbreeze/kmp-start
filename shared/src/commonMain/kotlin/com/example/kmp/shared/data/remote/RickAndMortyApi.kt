@@ -1,5 +1,6 @@
-package com.example.kmp.shared
+package com.example.kmp.shared.data.remote
 
+import com.example.kmp.shared.data.model.AnimeCharacterResponse
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation

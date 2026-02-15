@@ -1,4 +1,4 @@
-package com.example.kmp.shared
+package com.example.kmp.shared.data.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

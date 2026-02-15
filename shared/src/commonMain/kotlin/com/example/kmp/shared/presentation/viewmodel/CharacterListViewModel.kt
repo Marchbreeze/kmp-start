@@ -1,7 +1,9 @@
-package com.example.kmp.shared
+package com.example.kmp.shared.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.kmp.shared.data.model.AnimeCharacter
+import com.example.kmp.shared.data.remote.RickAndMortyApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
