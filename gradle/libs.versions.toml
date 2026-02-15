@@ -19,7 +19,7 @@ compile-sdk = "35"
 agp = "8.11.1"
 androidx-activityCompose = "1.10.1"
 androidx-room = "2.6.1"
-androidx-lifecycle = "2.8.7"
+androidx-lifecycle = "2.8.2"
 kotlin = "2.2.0"
 kotlinx-coroutines = "1.10.2"
 spotless = "7.2.1"
@@ -59,6 +59,9 @@ ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "kto
 
 ## Coil ##
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
+
+## Lifecycle ViewModel ##
+androidx-lifecycle-viewmodel-compose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "androidx-lifecycle" }
 
 [plugins]
 skie = { id = "co.touchlab.skie", version.ref = "skie" }
