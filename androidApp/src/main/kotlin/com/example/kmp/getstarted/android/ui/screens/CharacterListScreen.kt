@@ -37,16 +37,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.kmp.getstarted.android.ui.components.CharacterCard
 import com.example.kmp.shared.platform
 import com.example.kmp.shared.presentation.viewmodel.CharacterListViewModel
+import org.koin.compose.viewmodel.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CharacterListScreen(
     onCharacterClick: (Int) -> Unit = {},
-    viewModel: CharacterListViewModel = viewModel { CharacterListViewModel() },
+    viewModel: CharacterListViewModel = koinViewModel(),
 ) {
     val characters by viewModel.characters.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()

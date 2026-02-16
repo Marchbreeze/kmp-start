@@ -30,6 +30,7 @@ core = "1.7.0"
 junit = "1.3.0"
 skie = "0.10.4"
 ktor = "3.1.0"
+koin = "4.0.4"
 coil = "2.7.0"
 
 [libraries]
@@ -58,11 +59,17 @@ androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "j
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
+ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
 ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
 
 ## Coil ##
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
+
+## Koin ##
+koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
+koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
+koin-compose-viewmodel = { module = "io.insert-koin:koin-compose-viewmodel", version.ref = "koin" }
 
 ## Lifecycle ViewModel ##
 androidx-lifecycle-viewmodel-compose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "androidx-lifecycle" }
