@@ -7,6 +7,7 @@ import org.koin.core.parameter.parametersOf
 import org.koin.mp.KoinPlatform
 
 object KoinHelper {
+    @Throws(Exception::class)
     fun initKoin() {
         startKoin {
             modules(sharedModule)
