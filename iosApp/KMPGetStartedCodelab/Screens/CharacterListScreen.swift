@@ -38,6 +38,11 @@ struct CharacterListScreen: View {
             }
             .navigationTitle("Rick and Morty")
             .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    NavigationLink(destination: SettingsScreen()) {
+                        Image(systemName: "gearshape")
+                    }
+                }
                 ToolbarItem(placement: .bottomBar) {
                     Text("Running on \(platform())")
                         .font(.caption)
