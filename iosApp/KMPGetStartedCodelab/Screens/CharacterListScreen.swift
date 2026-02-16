@@ -29,7 +29,9 @@ struct CharacterListScreen: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 } else {
                     List(viewModel.characters, id: \.id) { character in
-                        CharacterRow(character: character)
+                        NavigationLink(destination: CharacterDetailScreen(characterId: character.id)) {
+                            CharacterRow(character: character)
+                        }
                     }
                     .listStyle(.plain)
                 }

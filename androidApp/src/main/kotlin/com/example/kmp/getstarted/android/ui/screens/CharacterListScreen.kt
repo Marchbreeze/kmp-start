@@ -45,7 +45,8 @@ import com.example.kmp.shared.presentation.viewmodel.CharacterListViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CharacterListScreen(
-    viewModel: CharacterListViewModel = viewModel { CharacterListViewModel() }
+    onCharacterClick: (Int) -> Unit = {},
+    viewModel: CharacterListViewModel = viewModel { CharacterListViewModel() },
 ) {
     val characters by viewModel.characters.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
@@ -101,7 +102,10 @@ fun CharacterListScreen(
                         contentPadding = PaddingValues(16.dp),
                     ) {
                         items(characters) { character ->
-                            CharacterCard(character)
+                            CharacterCard(
+                                character = character,
+                                onClick = { onCharacterClick(character.id) },
+                            )
                         }
                     }
                 }
