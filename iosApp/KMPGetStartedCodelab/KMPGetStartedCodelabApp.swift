@@ -10,7 +10,7 @@ import sharedKit
 @main
 struct KMPGetStartedCodelabApp: App {
     init() {
-        try? KoinHelper.shared.initKoin()
+        KoinIOS.shared.initialize()
     }
 
     var body: some Scene {

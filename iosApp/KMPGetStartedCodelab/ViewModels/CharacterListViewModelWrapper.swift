@@ -12,7 +12,7 @@ class CharacterListViewModelWrapper: ObservableObject {
     @Published var isLoading = true
     @Published var errorMessage: String?
 
-    private let viewModel = KoinHelper.shared.getCharacterListViewModel()
+    private let viewModel = KoinIOS.shared.getCharacterListViewModel()
 
     init() {
         observeCharacters()

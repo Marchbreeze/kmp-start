@@ -15,7 +15,7 @@ class CharacterDetailViewModelWrapper: ObservableObject {
     private let viewModel: CharacterDetailViewModel
 
     init(characterId: Int32) {
-        self.viewModel = KoinHelper.shared.getCharacterDetailViewModel(characterId: characterId)
+        self.viewModel = KoinIOS.shared.getCharacterDetailViewModel(characterId: characterId)
         observeCharacter()
         observeIsLoading()
         observeErrorMessage()
