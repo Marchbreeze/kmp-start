@@ -6,13 +6,13 @@ import org.koin.core.context.startKoin
 import org.koin.core.parameter.parametersOf
 import org.koin.mp.KoinPlatform
 
-fun initKoin() {
-    startKoin {
-        modules(sharedModule)
-    }
-}
-
 object KoinHelper {
+    fun initKoin() {
+        startKoin {
+            modules(sharedModule)
+        }
+    }
+
     private val koin get() = KoinPlatform.getKoin()
 
     fun getCharacterListViewModel(): CharacterListViewModel {
