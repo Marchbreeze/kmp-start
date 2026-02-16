@@ -3,14 +3,15 @@ package com.example.kmp.shared.presentation.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.kmp.shared.data.model.AnimeCharacter
-import com.example.kmp.shared.data.remote.RickAndMortyApi
+import com.example.kmp.shared.domain.usecase.GetCharactersUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class CharacterListViewModel : ViewModel() {
-    private val api = RickAndMortyApi()
+class CharacterListViewModel(
+    private val getCharactersUseCase: GetCharactersUseCase,
+) : ViewModel() {
 
     private val _characters = MutableStateFlow<List<AnimeCharacter>>(emptyList())
     val characters: StateFlow<List<AnimeCharacter>> = _characters.asStateFlow()
@@ -31,7 +32,7 @@ class CharacterListViewModel : ViewModel() {
             _errorMessage.value = null
 
             try {
-                val response = api.getCharacters(page)
+                val response = getCharactersUseCase(page)
                 _characters.value = response.results
             } catch (e: Exception) {
                 _errorMessage.value = e.message ?: "Unknown error occurred"

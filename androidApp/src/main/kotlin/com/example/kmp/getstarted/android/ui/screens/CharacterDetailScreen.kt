@@ -39,20 +39,21 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.example.kmp.getstarted.android.ui.components.toStatusColor
 import com.example.kmp.shared.data.model.AnimeCharacter
 import com.example.kmp.shared.presentation.viewmodel.CharacterDetailViewModel
+import org.koin.compose.viewmodel.koinViewModel
+import org.koin.core.parameter.parametersOf
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CharacterDetailScreen(
     characterId: Int,
     onBackClick: () -> Unit,
-    viewModel: CharacterDetailViewModel = viewModel(
+    viewModel: CharacterDetailViewModel = koinViewModel(
         key = "detail_$characterId",
-    ) { CharacterDetailViewModel(characterId) },
+    ) { parametersOf(characterId) },
 ) {
     val character by viewModel.character.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
