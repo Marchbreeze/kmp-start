@@ -4,6 +4,7 @@ import com.example.kmp.shared.presentation.viewmodel.CharacterDetailViewModel
 import com.example.kmp.shared.presentation.viewmodel.CharacterListViewModel
 import org.koin.core.context.startKoin
 import org.koin.core.parameter.parametersOf
+import org.koin.mp.KoinPlatform
 
 fun initKoin() {
     startKoin {
@@ -12,7 +13,7 @@ fun initKoin() {
 }
 
 object KoinHelper {
-    private val koin get() = org.koin.core.context.GlobalContext.get()
+    private val koin get() = KoinPlatform.getKoin()
 
     fun getCharacterListViewModel(): CharacterListViewModel {
         return koin.get()

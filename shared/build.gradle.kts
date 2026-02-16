@@ -53,6 +53,7 @@ kotlin {
                 implementation(libs.ktor.client.logging)
                 implementation(libs.androidx.lifecycle.viewmodel.compose)
                 api(libs.koin.core)
+                implementation(libs.koin.core.viewmodel)
             }
         }
 
