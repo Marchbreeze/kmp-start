@@ -25,6 +25,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.kmp.getstarted.android.ui.screens.CharacterDetailScreen
 import com.example.kmp.getstarted.android.ui.screens.CharacterListScreen
+import com.example.kmp.getstarted.android.ui.screens.SettingsScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,6 +43,9 @@ class MainActivity : ComponentActivity() {
                             onCharacterClick = { characterId ->
                                 navController.navigate("character/$characterId")
                             },
+                            onSettingsClick = {
+                                navController.navigate("settings")
+                            },
                         )
                     }
                     composable(
@@ -53,6 +57,11 @@ class MainActivity : ComponentActivity() {
                         val characterId = backStackEntry.arguments?.getInt("characterId") ?: return@composable
                         CharacterDetailScreen(
                             characterId = characterId,
+                            onBackClick = { navController.popBackStack() },
+                        )
+                    }
+                    composable("settings") {
+                        SettingsScreen(
                             onBackClick = { navController.popBackStack() },
                         )
                     }
