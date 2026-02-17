@@ -54,7 +54,7 @@ kotlin {
                 implementation(libs.androidx.lifecycle.viewmodel.compose)
                 api(libs.koin.core)
                 implementation(libs.koin.core.viewmodel)
-                implementation(libs.datastore.preferences.core)
+                api(libs.datastore.preferences.core)
             }
         }
 
