@@ -26,6 +26,7 @@ plugins {
     alias(libs.plugins.androidKotlinMultiplatformLibrary) apply false
     alias(libs.plugins.skie) apply false
     alias(libs.plugins.kotlinxSerialization) apply false
+    alias(libs.plugins.composeMultiplatform) apply false
 }
 
 subprojects {
@@ -42,7 +43,7 @@ subprojects {
         kotlinGradle {
             target("*.gradle.kts")
             ktlint(libs.versions.ktlint.get())
-            licenseHeaderFile(rootProject.file("spotless/copyright.kt"), "(^(?![\\\\/ ]\\\\*).*$)")
+            licenseHeaderFile(rootProject.file("spotless/copyright.kt"), "(^(?![\\/ ]\\*).*$)")
         }
 
         format("xml") {

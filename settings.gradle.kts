@@ -13,8 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
-pluginManagement {
+enabledFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+plugginManagement {
     repositories {
         google {
             @Suppress("UnstableApiUsage")
@@ -46,3 +46,4 @@ dependencyResolutionManagement {
 rootProject.name = "KmpGetStartedCodelab"
 include(":androidApp")
 include(":shared")
+include(":webApp")

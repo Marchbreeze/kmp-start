@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.androidKotlinMultiplatformLibrary)
     alias(libs.plugins.skie)
     alias(libs.plugins.kotlinxSerialization)
+    alias(libs.plugins.kotlinCompose)
 }
 
 kotlin {
@@ -39,6 +40,15 @@ kotlin {
     iosSimulatorArm64 {
         binaries.framework {
             baseName = xcfName
+        }
+    }
+
+    @OptIn(org.jetbrains.kotlin.gradle.ExperimentalWasmDsl::class)
+    wasmJs {
+        browser {
+            commonWebpackConfig {
+                outputFileName = "shared.js"
+            }
         }
     }
 
@@ -82,6 +92,12 @@ kotlin {
         iosMain {
             dependencies {
                 implementation(libs.ktor.client.darwin)
+            }
+        }
+
+        val wasmJsMain by getting {
+            dependencies {
+                implementation(libs.ktor.client.js)
             }
         }
     }
