@@ -46,3 +46,4 @@ dependencyResolutionManagement {
 rootProject.name = "KmpGetStartedCodelab"
 include(":androidApp")
 include(":shared")
+include(":webJsApp")

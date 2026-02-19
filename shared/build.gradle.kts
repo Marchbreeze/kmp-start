@@ -22,6 +22,10 @@ kotlin {
         }
     }
 
+    js(IR) {
+        browser()
+    }
+
     val xcfName = "sharedKit"
 
     iosX64 {
@@ -82,6 +86,12 @@ kotlin {
         iosMain {
             dependencies {
                 implementation(libs.ktor.client.darwin)
+            }
+        }
+
+        jsMain {
+            dependencies {
+                implementation(libs.ktor.client.js)
             }
         }
     }
