@@ -2,7 +2,6 @@ package com.example.kmp.web
 
 import com.example.kmp.web.ui.pages.CharacterDetailPage
 import com.example.kmp.web.ui.pages.CharacterListPage
-import com.example.kmp.web.ui.pages.SettingsPage
 import kotlinx.browser.window
 import org.w3c.dom.Element
 
@@ -25,7 +24,6 @@ class App(private val container: Element) {
                 val id = hash.removePrefix("detail/").toIntOrNull() ?: 1
                 CharacterDetailPage(container, id)
             }
-            hash == "settings" -> SettingsPage(container)
             else -> CharacterListPage(container)
         }
 

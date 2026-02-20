@@ -33,9 +33,6 @@ class CharacterListPage(
         val topBar = createTopBar(
             title = "Rick and Morty",
             subtitle = "Running on ${platform()}",
-            onSettingsClick = {
-                kotlinx.browser.window.location.hash = "#settings"
-            },
         )
         container.insertBefore(topBar, container.firstChild)
 
