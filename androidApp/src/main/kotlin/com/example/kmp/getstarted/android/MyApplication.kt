@@ -2,7 +2,9 @@ package com.example.kmp.getstarted.android
 
 import android.app.Application
 import com.example.kmp.shared.data.local.createDataStore
+import com.example.kmp.shared.data.repository.DataStoreSettingsRepository
 import com.example.kmp.shared.di.sharedModule
+import com.example.kmp.shared.domain.repository.SettingsRepository
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -17,6 +19,7 @@ class MyApplication : Application() {
             modules(
                 module {
                     single { createDataStore(this@MyApplication) }
+                    single<SettingsRepository> { DataStoreSettingsRepository(get()) }
                 },
                 sharedModule,
             )
