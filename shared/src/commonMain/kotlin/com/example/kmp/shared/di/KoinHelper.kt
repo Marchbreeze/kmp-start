@@ -1,17 +1,10 @@
 package com.example.kmp.shared.di
 
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
 import org.koin.core.context.startKoin
-import org.koin.dsl.module
+import org.koin.core.module.Module
 
-fun initKoin(dataStore: DataStore<Preferences>) {
+fun initKoin(platformModule: Module) {
     startKoin {
-        modules(
-            module {
-                single<DataStore<Preferences>> { dataStore }
-            },
-            sharedModule,
-        )
+        modules(platformModule, sharedModule)
     }
 }

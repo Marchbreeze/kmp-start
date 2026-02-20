@@ -3,9 +3,7 @@ package com.example.kmp.shared.di
 import com.example.kmp.shared.data.remote.RickAndMortyApi
 import com.example.kmp.shared.data.remote.createHttpClient
 import com.example.kmp.shared.data.repository.CharacterRepositoryImpl
-import com.example.kmp.shared.data.repository.SettingsRepositoryImpl
 import com.example.kmp.shared.domain.repository.CharacterRepository
-import com.example.kmp.shared.domain.repository.SettingsRepository
 import com.example.kmp.shared.domain.usecase.GetCharacterDetailUseCase
 import com.example.kmp.shared.domain.usecase.GetCharactersUseCase
 import com.example.kmp.shared.domain.usecase.GetSettingsUseCase
@@ -27,7 +25,7 @@ val sharedModule = module {
 
     // Repository
     singleOf(::CharacterRepositoryImpl) bind CharacterRepository::class
-    singleOf(::SettingsRepositoryImpl) bind SettingsRepository::class
+    // SettingsRepository is provided by each platform's module
 
     // Use Cases
     factoryOf(::GetCharactersUseCase)

@@ -22,6 +22,10 @@ kotlin {
         }
     }
 
+    js(IR) {
+        browser()
+    }
+
     val xcfName = "sharedKit"
 
     iosX64 {
@@ -54,7 +58,6 @@ kotlin {
                 implementation(libs.androidx.lifecycle.viewmodel.compose)
                 api(libs.koin.core)
                 implementation(libs.koin.core.viewmodel)
-                api(libs.datastore.preferences.core)
             }
         }
 
@@ -68,6 +71,7 @@ kotlin {
             dependencies {
                 implementation(libs.ktor.client.okhttp)
                 implementation(libs.koin.android)
+                api(libs.datastore.preferences.core)
             }
         }
 
@@ -82,6 +86,13 @@ kotlin {
         iosMain {
             dependencies {
                 implementation(libs.ktor.client.darwin)
+                api(libs.datastore.preferences.core)
+            }
+        }
+
+        jsMain {
+            dependencies {
+                implementation(libs.ktor.client.js)
             }
         }
     }
