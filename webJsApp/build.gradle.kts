@@ -4,7 +4,7 @@ plugins {
 
 kotlin {
     js(IR) {
-        moduleName = "webJsApp"
+        outputModuleName.set("webJsApp")
         browser {
             commonWebpackConfig {
                 outputFileName = "webJsApp.js"
@@ -23,6 +23,7 @@ kotlin {
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.kotlinx.html.js)
                 implementation(libs.koin.core)
+                implementation(libs.androidx.lifecycle.viewmodel.compose)
                 implementation(libs.ktor.client.core)
                 implementation(libs.ktor.client.js)
             }
