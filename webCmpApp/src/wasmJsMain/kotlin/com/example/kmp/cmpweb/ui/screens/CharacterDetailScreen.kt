@@ -3,24 +3,30 @@ package com.example.kmp.cmpweb.ui.screens
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -68,9 +74,9 @@ fun CharacterDetailScreen(
                 },
                 navigationIcon = {
                     IconButton(onClick = onBackClick) {
-                        Text(
-                            text = "\u2190",
-                            style = MaterialTheme.typography.titleLarge,
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = "Back",
                         )
                     }
                 },
@@ -110,61 +116,101 @@ fun CharacterDetailScreen(
 
 @Composable
 private fun CharacterDetailContent(character: AnimeCharacter) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState()),
-    ) {
-        NetworkImage(
-            url = character.image,
-            contentDescription = character.name,
-            modifier = Modifier
-                .fillMaxWidth()
-                .aspectRatio(1f),
-            contentScale = ContentScale.Crop,
-        )
+    BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
+        val isWideScreen = maxWidth > 600.dp
 
-        Column(
-            modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-        ) {
-            Text(
-                text = character.name,
-                style = MaterialTheme.typography.headlineMedium,
-                fontWeight = FontWeight.Bold,
-            )
-
+        if (isWideScreen) {
+            // 가로 레이아웃: 이미지 왼쪽 + 정보 오른쪽
             Row(
-                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp),
+                horizontalArrangement = Arrangement.spacedBy(24.dp),
             ) {
-                Box(
+                NetworkImage(
+                    url = character.image,
+                    contentDescription = character.name,
                     modifier = Modifier
-                        .size(12.dp)
-                        .clip(CircleShape)
-                        .background(character.status.toStatusColor()),
+                        .widthIn(max = 360.dp)
+                        .fillMaxHeight()
+                        .aspectRatio(1f)
+                        .clip(RoundedCornerShape(16.dp)),
+                    contentScale = ContentScale.Crop,
                 )
-                Spacer(modifier = Modifier.width(8.dp))
-                Text(
-                    text = "${character.status} - ${character.species}",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
+
+                Column(
+                    modifier = Modifier
+                        .weight(1f)
+                        .verticalScroll(rememberScrollState()),
+                    verticalArrangement = Arrangement.spacedBy(12.dp),
+                ) {
+                    CharacterInfoSection(character)
+                }
             }
+        } else {
+            // 세로 레이아웃: 이미지 위 + 정보 아래 (모바일)
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState()),
+            ) {
+                NetworkImage(
+                    url = character.image,
+                    contentDescription = character.name,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(1f),
+                    contentScale = ContentScale.Crop,
+                )
 
-            Spacer(modifier = Modifier.height(8.dp))
-
-            InfoCard(label = "Gender", value = character.gender)
-            InfoCard(label = "Origin", value = character.origin.name)
-            InfoCard(label = "Last Known Location", value = character.location.name)
-            InfoCard(
-                label = "Episodes",
-                value = "${character.episode.size} episode(s)",
-            )
-
-            if (character.type.isNotBlank()) {
-                InfoCard(label = "Type", value = character.type)
+                Column(
+                    modifier = Modifier.padding(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(12.dp),
+                ) {
+                    CharacterInfoSection(character)
+                }
             }
         }
+    }
+}
+
+@Composable
+private fun CharacterInfoSection(character: AnimeCharacter) {
+    Text(
+        text = character.name,
+        style = MaterialTheme.typography.headlineMedium,
+        fontWeight = FontWeight.Bold,
+    )
+
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Box(
+            modifier = Modifier
+                .size(12.dp)
+                .clip(CircleShape)
+                .background(character.status.toStatusColor()),
+        )
+        Spacer(modifier = Modifier.width(8.dp))
+        Text(
+            text = "${character.status} - ${character.species}",
+            style = MaterialTheme.typography.titleMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+    }
+
+    Spacer(modifier = Modifier.height(8.dp))
+
+    InfoCard(label = "Gender", value = character.gender)
+    InfoCard(label = "Origin", value = character.origin.name)
+    InfoCard(label = "Last Known Location", value = character.location.name)
+    InfoCard(
+        label = "Episodes",
+        value = "${character.episode.size} episode(s)",
+    )
+
+    if (character.type.isNotBlank()) {
+        InfoCard(label = "Type", value = character.type)
     }
 }
 
