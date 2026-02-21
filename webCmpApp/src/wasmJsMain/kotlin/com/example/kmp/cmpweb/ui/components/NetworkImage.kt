@@ -77,7 +77,6 @@ fun NetworkImage(
                     modifier = Modifier
                         .fillMaxSize()
                         .background(MaterialTheme.colorScheme.surfaceVariant),
-                    contentAlignment = Alignment.Center,
                 )
             }
         }
