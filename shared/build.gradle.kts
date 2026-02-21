@@ -26,6 +26,11 @@ kotlin {
         browser()
     }
 
+    @OptIn(org.jetbrains.kotlin.gradle.ExperimentalWasmDsl::class)
+    wasmJs {
+        browser()
+    }
+
     val xcfName = "sharedKit"
 
     iosX64 {
@@ -91,6 +96,12 @@ kotlin {
         }
 
         jsMain {
+            dependencies {
+                implementation(libs.ktor.client.js)
+            }
+        }
+
+        wasmJsMain {
             dependencies {
                 implementation(libs.ktor.client.js)
             }

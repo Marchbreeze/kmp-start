@@ -47,3 +47,4 @@ rootProject.name = "KmpGetStartedCodelab"
 include(":androidApp")
 include(":shared")
 include(":webJsApp")
+include(":webCmpApp")
