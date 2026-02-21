@@ -23,6 +23,7 @@ kotlin {
                 implementation(compose.ui)
                 implementation(compose.foundation)
                 implementation(compose.runtime)
+                implementation(compose.components.resources)
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.koin.core)
                 implementation(libs.koin.compose.viewmodel)

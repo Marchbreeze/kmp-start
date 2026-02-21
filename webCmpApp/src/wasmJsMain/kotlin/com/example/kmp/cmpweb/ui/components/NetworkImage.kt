@@ -15,15 +15,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.toComposeImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 import io.ktor.client.statement.readRawBytes
-import org.jetbrains.skia.Image
+import org.jetbrains.compose.resources.decodeToImageBitmap
 
 /**
- * Composable that loads and displays a network image using Ktor + Skia decoding.
+ * Composable that loads and displays a network image using Ktor + Compose Resources decoding.
  * Replacement for Coil's AsyncImage, which is not available on wasmJs.
  */
 @Composable
@@ -42,8 +41,7 @@ fun NetworkImage(
             val client = HttpClient()
             val bytes = client.get(url).readRawBytes()
             client.close()
-            val skiaImage = Image.makeFromEncoded(bytes)
-            imageBitmap = skiaImage.toComposeImageBitmap()
+            imageBitmap = bytes.decodeToImageBitmap()
         } catch (e: Exception) {
             // Image load failed - show placeholder
         }
