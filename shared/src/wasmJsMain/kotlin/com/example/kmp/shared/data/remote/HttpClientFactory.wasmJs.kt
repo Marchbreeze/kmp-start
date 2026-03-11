@@ -6,3 +6,5 @@ import io.ktor.client.engine.js.Js
 actual fun createPlatformEngine(): HttpClientEngine {
     return Js.create()
 }
+
+actual fun getServerBaseUrl(): String = "http://localhost:8080/api/"

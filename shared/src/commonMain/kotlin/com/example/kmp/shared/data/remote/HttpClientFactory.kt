@@ -16,6 +16,8 @@ import kotlinx.serialization.json.Json
 
 expect fun createPlatformEngine(): HttpClientEngine
 
+expect fun getServerBaseUrl(): String
+
 fun createHttpClient(): HttpClient {
     return HttpClient(createPlatformEngine()) {
         install(ContentNegotiation) {
@@ -34,7 +36,7 @@ fun createHttpClient(): HttpClient {
         }
 
         install(DefaultRequest) {
-            url("https://rickandmortyapi.com/api/")
+            url(getServerBaseUrl())
             header(HttpHeaders.ContentType, ContentType.Application.Json)
         }
     }

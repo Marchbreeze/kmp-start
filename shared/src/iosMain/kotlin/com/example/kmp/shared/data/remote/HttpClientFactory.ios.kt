@@ -10,3 +10,5 @@ actual fun createPlatformEngine(): HttpClientEngine {
         }
     }
 }
+
+actual fun getServerBaseUrl(): String = "http://localhost:8080/api/"
