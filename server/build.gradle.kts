@@ -1,6 +1,6 @@
 plugins {
+    alias(libs.plugins.kotlinJvm)
     alias(libs.plugins.kotlinxSerialization)
-    kotlin("jvm") version libs.versions.kotlin.get()
     application
 }
 
