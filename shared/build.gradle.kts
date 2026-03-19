@@ -22,6 +22,8 @@ kotlin {
         }
     }
 
+    jvm()
+
     js(IR) {
         browser()
     }
