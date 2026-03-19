@@ -1,0 +1,358 @@
+package com.example.kmp.server.data
+
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class AnimeCharacterResponse(
+    val info: Info,
+    val results: List<AnimeCharacter>,
+)
+
+@Serializable
+data class Info(
+    val count: Int,
+    val pages: Int,
+    val next: String? = null,
+    val prev: String? = null,
+)
+
+@Serializable
+data class AnimeCharacter(
+    val id: Int,
+    val name: String,
+    val status: String,
+    val species: String,
+    val type: String = "",
+    val gender: String,
+    val origin: Location,
+    val location: Location,
+    val image: String,
+    val episode: List<String>,
+    val url: String,
+    val created: String,
+)
+
+@Serializable
+data class Location(
+    val name: String,
+    val url: String,
+)
+
+object CharacterDatabase {
+    private const val BASE_URL = "http://localhost:8080/api"
+    private const val IMAGE_BASE = "https://rickandmortyapi.com/api/character/avatar"
+
+    val characters: List<AnimeCharacter> = listOf(
+        AnimeCharacter(
+            id = 1,
+            name = "Rick Sanchez",
+            status = "Alive",
+            species = "Human",
+            type = "",
+            gender = "Male",
+            origin = Location("Earth (C-137)", "$BASE_URL/location/1"),
+            location = Location("Citadel of Ricks", "$BASE_URL/location/3"),
+            image = "$IMAGE_BASE/1.jpeg",
+            episode = (1..51).map { "$BASE_URL/episode/$it" },
+            url = "$BASE_URL/character/1",
+            created = "2017-11-04T18:48:46.250Z",
+        ),
+        AnimeCharacter(
+            id = 2,
+            name = "Morty Smith",
+            status = "Alive",
+            species = "Human",
+            type = "",
+            gender = "Male",
+            origin = Location("unknown", ""),
+            location = Location("Citadel of Ricks", "$BASE_URL/location/3"),
+            image = "$IMAGE_BASE/2.jpeg",
+            episode = (1..51).map { "$BASE_URL/episode/$it" },
+            url = "$BASE_URL/character/2",
+            created = "2017-11-04T18:50:21.651Z",
+        ),
+        AnimeCharacter(
+            id = 3,
+            name = "Summer Smith",
+            status = "Alive",
+            species = "Human",
+            type = "",
+            gender = "Female",
+            origin = Location("Earth (Replacement Dimension)", "$BASE_URL/location/20"),
+            location = Location("Earth (Replacement Dimension)", "$BASE_URL/location/20"),
+            image = "$IMAGE_BASE/3.jpeg",
+            episode = listOf(6, 7, 8, 9, 10, 11, 12, 17, 20, 22, 26, 27, 28, 29, 30, 31).map { "$BASE_URL/episode/$it" },
+            url = "$BASE_URL/character/3",
+            created = "2017-11-04T19:09:56.428Z",
+        ),
+        AnimeCharacter(
+            id = 4,
+            name = "Beth Smith",
+            status = "Alive",
+            species = "Human",
+            type = "",
+            gender = "Female",
+            origin = Location("Earth (Replacement Dimension)", "$BASE_URL/location/20"),
+            location = Location("Earth (Replacement Dimension)", "$BASE_URL/location/20"),
+            image = "$IMAGE_BASE/4.jpeg",
+            episode = listOf(6, 7, 8, 9, 10, 11, 12, 14, 15, 17, 18, 20, 21, 22, 23, 27, 28, 29, 30, 31).map { "$BASE_URL/episode/$it" },
+            url = "$BASE_URL/character/4",
+            created = "2017-11-04T19:22:43.665Z",
+        ),
+        AnimeCharacter(
+            id = 5,
+            name = "Jerry Smith",
+            status = "Alive",
+            species = "Human",
+            type = "",
+            gender = "Male",
+            origin = Location("Earth (Replacement Dimension)", "$BASE_URL/location/20"),
+            location = Location("Earth (Replacement Dimension)", "$BASE_URL/location/20"),
+            image = "$IMAGE_BASE/5.jpeg",
+            episode = listOf(6, 7, 8, 9, 10, 11, 12, 13, 14, 17, 18, 20, 21, 22, 23, 26, 29, 30, 31).map { "$BASE_URL/episode/$it" },
+            url = "$BASE_URL/character/5",
+            created = "2017-11-04T19:26:56.301Z",
+        ),
+        AnimeCharacter(
+            id = 6,
+            name = "Abadango Cluster Princess",
+            status = "Alive",
+            species = "Alien",
+            type = "",
+            gender = "Female",
+            origin = Location("Abadango", "$BASE_URL/location/2"),
+            location = Location("Abadango", "$BASE_URL/location/2"),
+            image = "$IMAGE_BASE/6.jpeg",
+            episode = listOf("$BASE_URL/episode/27"),
+            url = "$BASE_URL/character/6",
+            created = "2017-11-04T19:50:28.250Z",
+        ),
+        AnimeCharacter(
+            id = 7,
+            name = "Abradolf Lincler",
+            status = "unknown",
+            species = "Human",
+            type = "Genetic experiment",
+            gender = "Male",
+            origin = Location("Earth (Replacement Dimension)", "$BASE_URL/location/20"),
+            location = Location("Testicle Monster Dimension", "$BASE_URL/location/21"),
+            image = "$IMAGE_BASE/7.jpeg",
+            episode = listOf(10, 11).map { "$BASE_URL/episode/$it" },
+            url = "$BASE_URL/character/7",
+            created = "2017-11-04T19:59:20.523Z",
+        ),
+        AnimeCharacter(
+            id = 8,
+            name = "Adjudicator Rick",
+            status = "Dead",
+            species = "Human",
+            type = "",
+            gender = "Male",
+            origin = Location("unknown", ""),
+            location = Location("Citadel of Ricks", "$BASE_URL/location/3"),
+            image = "$IMAGE_BASE/8.jpeg",
+            episode = listOf("$BASE_URL/episode/28"),
+            url = "$BASE_URL/character/8",
+            created = "2017-11-04T20:03:34.737Z",
+        ),
+        AnimeCharacter(
+            id = 9,
+            name = "Agency Director",
+            status = "Dead",
+            species = "Human",
+            type = "",
+            gender = "Male",
+            origin = Location("Earth (Replacement Dimension)", "$BASE_URL/location/20"),
+            location = Location("Earth (Replacement Dimension)", "$BASE_URL/location/20"),
+            image = "$IMAGE_BASE/9.jpeg",
+            episode = listOf("$BASE_URL/episode/24"),
+            url = "$BASE_URL/character/9",
+            created = "2017-11-04T20:06:54.976Z",
+        ),
+        AnimeCharacter(
+            id = 10,
+            name = "Alan Rails",
+            status = "Dead",
+            species = "Human",
+            type = "Superhuman (Ghost trains power)",
+            gender = "Male",
+            origin = Location("unknown", ""),
+            location = Location("Worldender's lair", "$BASE_URL/location/4"),
+            image = "$IMAGE_BASE/10.jpeg",
+            episode = listOf("$BASE_URL/episode/25"),
+            url = "$BASE_URL/character/10",
+            created = "2017-11-04T20:19:09.017Z",
+        ),
+        AnimeCharacter(
+            id = 11,
+            name = "Albert Einstein",
+            status = "Dead",
+            species = "Human",
+            type = "",
+            gender = "Male",
+            origin = Location("Earth (C-137)", "$BASE_URL/location/1"),
+            location = Location("Earth (Replacement Dimension)", "$BASE_URL/location/20"),
+            image = "$IMAGE_BASE/11.jpeg",
+            episode = listOf("$BASE_URL/episode/12"),
+            url = "$BASE_URL/character/11",
+            created = "2017-11-04T20:20:20.965Z",
+        ),
+        AnimeCharacter(
+            id = 12,
+            name = "Alexander",
+            status = "Dead",
+            species = "Human",
+            type = "",
+            gender = "Male",
+            origin = Location("Earth (C-500A)", "$BASE_URL/location/23"),
+            location = Location("Earth (C-500A)", "$BASE_URL/location/23"),
+            image = "$IMAGE_BASE/12.jpeg",
+            episode = listOf("$BASE_URL/episode/7"),
+            url = "$BASE_URL/character/12",
+            created = "2017-11-04T20:32:33.144Z",
+        ),
+        AnimeCharacter(
+            id = 13,
+            name = "Alien Googah",
+            status = "unknown",
+            species = "Alien",
+            type = "",
+            gender = "unknown",
+            origin = Location("unknown", ""),
+            location = Location("Earth (Replacement Dimension)", "$BASE_URL/location/20"),
+            image = "$IMAGE_BASE/13.jpeg",
+            episode = listOf("$BASE_URL/episode/31"),
+            url = "$BASE_URL/character/13",
+            created = "2017-11-04T20:33:30.779Z",
+        ),
+        AnimeCharacter(
+            id = 14,
+            name = "Alien Morty",
+            status = "unknown",
+            species = "Alien",
+            type = "",
+            gender = "Male",
+            origin = Location("unknown", ""),
+            location = Location("Citadel of Ricks", "$BASE_URL/location/3"),
+            image = "$IMAGE_BASE/14.jpeg",
+            episode = listOf("$BASE_URL/episode/10"),
+            url = "$BASE_URL/character/14",
+            created = "2017-11-04T20:51:31.373Z",
+        ),
+        AnimeCharacter(
+            id = 15,
+            name = "Alien Rick",
+            status = "unknown",
+            species = "Alien",
+            type = "",
+            gender = "Male",
+            origin = Location("unknown", ""),
+            location = Location("Citadel of Ricks", "$BASE_URL/location/3"),
+            image = "$IMAGE_BASE/15.jpeg",
+            episode = listOf("$BASE_URL/episode/10"),
+            url = "$BASE_URL/character/15",
+            created = "2017-11-04T20:56:13.215Z",
+        ),
+        AnimeCharacter(
+            id = 16,
+            name = "Amish Cyborg",
+            status = "Dead",
+            species = "Alien",
+            type = "Parasite",
+            gender = "Male",
+            origin = Location("unknown", ""),
+            location = Location("Earth (Replacement Dimension)", "$BASE_URL/location/20"),
+            image = "$IMAGE_BASE/16.jpeg",
+            episode = listOf("$BASE_URL/episode/15"),
+            url = "$BASE_URL/character/16",
+            created = "2017-11-04T21:12:45.235Z",
+        ),
+        AnimeCharacter(
+            id = 17,
+            name = "Annie",
+            status = "Alive",
+            species = "Human",
+            type = "",
+            gender = "Female",
+            origin = Location("Earth (C-137)", "$BASE_URL/location/1"),
+            location = Location("Anatomy Park", "$BASE_URL/location/5"),
+            image = "$IMAGE_BASE/17.jpeg",
+            episode = listOf("$BASE_URL/episode/3"),
+            url = "$BASE_URL/character/17",
+            created = "2017-11-04T22:21:24.481Z",
+        ),
+        AnimeCharacter(
+            id = 18,
+            name = "Antenna Morty",
+            status = "Alive",
+            species = "Human",
+            type = "Human with antennae",
+            gender = "Male",
+            origin = Location("unknown", ""),
+            location = Location("Citadel of Ricks", "$BASE_URL/location/3"),
+            image = "$IMAGE_BASE/18.jpeg",
+            episode = listOf("$BASE_URL/episode/10"),
+            url = "$BASE_URL/character/18",
+            created = "2017-11-04T22:25:29.008Z",
+        ),
+        AnimeCharacter(
+            id = 19,
+            name = "Antenna Rick",
+            status = "unknown",
+            species = "Human",
+            type = "Human with antennae",
+            gender = "Male",
+            origin = Location("unknown", ""),
+            location = Location("unknown", ""),
+            image = "$IMAGE_BASE/19.jpeg",
+            episode = listOf("$BASE_URL/episode/10"),
+            url = "$BASE_URL/character/19",
+            created = "2017-11-04T22:28:13.756Z",
+        ),
+        AnimeCharacter(
+            id = 20,
+            name = "Ants in my Eyes Johnson",
+            status = "unknown",
+            species = "Human",
+            type = "Human with ants in his eyes",
+            gender = "Male",
+            origin = Location("unknown", ""),
+            location = Location("Interdimensional Cable", "$BASE_URL/location/6"),
+            image = "$IMAGE_BASE/20.jpeg",
+            episode = listOf("$BASE_URL/episode/8"),
+            url = "$BASE_URL/character/20",
+            created = "2017-11-04T22:34:53.659Z",
+        ),
+    )
+
+    private const val PAGE_SIZE = 20
+
+    fun getCharacters(page: Int): AnimeCharacterResponse {
+        val totalPages = (characters.size + PAGE_SIZE - 1) / PAGE_SIZE
+        val startIndex = (page - 1) * PAGE_SIZE
+        val endIndex = minOf(startIndex + PAGE_SIZE, characters.size)
+
+        val pageResults = if (startIndex < characters.size) {
+            characters.subList(startIndex, endIndex)
+        } else {
+            emptyList()
+        }
+
+        val nextUrl = if (page < totalPages) "$BASE_URL/character?page=${page + 1}" else null
+        val prevUrl = if (page > 1) "$BASE_URL/character?page=${page - 1}" else null
+
+        return AnimeCharacterResponse(
+            info = Info(
+                count = characters.size,
+                pages = totalPages,
+                next = nextUrl,
+                prev = prevUrl,
+            ),
+            results = pageResults,
+        )
+    }
+
+    fun getCharacter(id: Int): AnimeCharacter? {
+        return characters.find { it.id == id }
+    }
+}
